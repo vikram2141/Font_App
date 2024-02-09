@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class MainActivity extends AppCompatActivity {
 
 Spinner Spinner ;
-Button button;
+Button   button ;
 TextView textView ,textsize;
     private static final String SHARED_PREF_NAME ="Mypref";
     private static final String KEY_FONT_FAMILY ="Fontfamily";
@@ -35,7 +36,7 @@ SeekBar seekBar;
     int defaultColor;
 
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +46,19 @@ SeekBar seekBar;
         seekBar =findViewById(R.id.seekbar);
         textsize =findViewById(R.id.fontsize);
         button =findViewById(R.id.btncolor);
+        Button set_button =findViewById(R.id.set_button);
+        EditText edit =findViewById(R.id.myText);
         sharedPreferences =getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         editor =sharedPreferences.edit();
         changeFontFamily();
         changeFontSize();
+
+        set_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textView.setText(edit.getText().toString());
+            }
+        });
         defaultColor = ContextCompat.getColor(MainActivity.this, com.google.android.material.R.color.design_default_color_primary);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
